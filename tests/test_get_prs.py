@@ -140,7 +140,9 @@ def test_main_exits_nonzero_when_any_repo_fails(monkeypatch, tmp_path):
 def test_main_exports_when_all_repos_succeed(monkeypatch, tmp_path):
     api = FakeGitHubAPI(issues=[make_item("2024-06-01T00:00:00Z")])
     csv_path = run_main(monkeypatch, tmp_path, api)
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(csv_path, parse_dates=["date_opened"])
     # The fake serves one issue for every repo in the script's repo list
     assert len(df) == df["repo"].nunique()
     assert set(df.columns) >= {"date_opened", "date_closed", "repo", "type"}
+    assert "item_opened_by" not in df.columns
+    assert set(df["date_opened"]) == {datetime(2024, 6, 1)}
