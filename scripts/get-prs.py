@@ -118,7 +118,6 @@ def get_repo_data(
         data.append(
             {
                 "title": item["title"],
-                "item_opened_by": created_at,
                 "date_opened": created_at,
                 "date_closed": closed_at,
                 "current_status": item["state"],
@@ -226,7 +225,7 @@ def main():
        * what repo it was opened in
        * whether it's a pr or an issue
        Here are the df headers
-       title,item_opened_by,date_opened,date_closed,current_status,labels,created_by,location,contrib_type,repo,type
+       title,date_opened,date_closed,current_status,labels,created_by,location,contrib_type,repo,type
     It then saves a csv file with data for that year
     """
     print(f"I am working here {os.getcwd()}")
